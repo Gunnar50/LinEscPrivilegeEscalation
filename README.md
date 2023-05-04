@@ -10,7 +10,7 @@ in Python 3.
 Clone the project folder form GitHub
 ```bash
 # From github
-git clone https://github.com/Gunnar50/PenTestTool
+git clone https://github.com/Gunnar50/LinEscPrivilegeEscalation.git
 ```
 
 Or simply import the project folder into the vulnerable machine.
