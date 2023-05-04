@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privilege Escalation Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: #007bff;
+            color: #fff;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        h2 {
+            padding-bottom: 1px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        ul {
+            margin: 5px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .section-highlight {
+            background-color: #007bff;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .warning {
+            background-color: #dd0000;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .safe {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            white-space: nowrap;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        .no-vulnerability {
+            font-weight: bold;
+            display: none; /* Hide the message by default */
+            padding: 0px 8px;
+        }
+
+        /* Style for the intro text */
+        .intro {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: justify;
+            line-height: 1.5;
+        }
+
+        table td code {
+            display: block;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Linux Privilege Escalation <br>Vulnerability Assessment and Mitigation Report</h1>
+            <p>Generated on: <span id="date"></span></p>
+        </header>
+        <div class="main">
+            <div class="intro">
+                <p>
+                    This document presents the results of our security assessment, organized into sections that focus on specific functions.
+                    Each section highlights potential vulnerabilities and their details.
+                    If a section heading appears in <span class="warning">RED</span>, it indicates that a vulnerability has been found, and immediate action is recommended.
+                    Please refer to the <span class="section-highlight">Recommendations</span> section at the bottom of the report for suggested mitigation strategies and best practices.
+                </p>
+            </div>
+
+            <section id="general">
+                <h2 class="section-highlight">GENERAL INFORMATION</h2>
+                <h3>System Information:</h3>
+                <p><b>System Name:</b> Linux</p>
+                <p><b>Current User:</b> Kali</p>
+                <p><b>Other Users:</b></p>
+                <ul>
+                    <li>Root</li>
+                    <li>Test</li>
+                </ul>
+            </section>
+
+            <section id="suid">
+                <h2 class="section-highlight">SUID RESULT</h2>
+                <table id="suid-table">
+                    <thead>
+                            <tr>
+                                <th>Binary Path</th>
+                                <th>Exploit Command</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>/usr/bin/passwd</td>
+                                <td><code>base64 /etc/shadow | base64 --decode</code></td>
+                                <td>Used to change a user's password. The binary has the SUID bit set, allowing it to run with root privileges to update the password file.</td>
+                            </tr>
+                            <tr>
+                                <td>/usr/sbin/exim4</td>
+                                <td><code>base64 /etc/shadow | base64 --decode</code></td>
+                                <td>An email server (MTA) that can execute commands with root permissions. Some versions of Exim4 are known to have vulnerabilities that can lead to privilege escalation.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <p id="suid-no-vuln" class="no-vulnerability">No SUID vulnerabilities found!</p>
+            </section>
+
+            <section id="sudo">
+                <h2 class="section-highlight">SUDO RESULT</h2>
+                <table id="sudo-table">
+                    <thead>
+                        <tr>
+                            <th>Vulnerable Binary Path</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+
+                </table>
+                <p id="sudo-no-vuln" class="no-vulnerability">No SUDO vulnerabilities found!</p>
+
+            </section>
+
+            <section id="capabilities">
+                <h2 class="section-highlight">CAPABILITIES RESULT</h2>
+                <table id="cap-table">
+                    <thead>
+                        <tr>
+                            <th>Vulnerable Binary Path</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/usr/bin/ping has cap_net_raw capability</td>
+                            <td>Used to change a user's password. The binary has the SUID bit set, allowing it to run with root privileges to update the password file.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="cap-no-vuln" class="no-vulnerability">No important Capabilities granted found!</p>
+            </section>
+
+            <section id="world-writable">
+                <h2 class="section-highlight">WORLD-WRITABLE FILES RESULT</h2>
+                <table id="wwf-table">
+                    <thead>
+                        <tr>
+                            <th>Vulnerable Binary Path</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>/var/www/html/config.php</td>
+                            <td>Used to change a user's password. The binary has the SUID bit set, allowing it to run with root privileges to update the password file.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p id="wwf-no-vuln" class="no-vulnerability">No World Writable Files found!</p>
+            </section>
+
+            <section id="shellshock">
+                <h2 class="section-highlight">SHELLSHOCK RESULT</h2>
+                <table id="shellshock-table">
+                    <thead>
+                        <tr>
+                            <th>Vulnerability</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <p id="shellshock-no-vuln" class="no-vulnerability">No ShellShock vulnerabilities found!</p>
+            </section>
+
+            <section id="ssh">
+                <h2 class="section-highlight">SSH RESULT</h2>
+                <table id="ssh-table">
+                    <thead>
+                        <tr>
+                            <th>Vulnerability</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <p id="ssh-no-vuln" class="no-vulnerability">No SSH vulnerabilities found!</p>
+            </section>
+
+            <section id="recommendations">
+                <h2 class="section-highlight">Recommendations</h2>
+                <ul id="recommendations-list">
+                    <li>Review the necessity of SUID permissions for each listed file.</li>
+                    <li>Restrict user 'johndoe' from having NOPASSWD access to /usr/bin/apt-get.</li>
+                    <li>Revoke unnecessary capabilities, such as cap_net_raw for /usr/bin/ping.</li>
+                    <li>Remove world-writable permissions from /var/www/html/config.php.</li>
+                    <li>Disable root login for SSH and use sudo instead.</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+    <script>
+        document.getElementById("date").innerHTML = new Date().toLocaleString();
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightVulnerabilitySection("#suid-table", "#suid-no-vuln");
+            highlightVulnerabilitySection("#sudo-table", "#sudo-no-vuln");
+            highlightVulnerabilitySection("#cap-table", "#cap-no-vuln");
+            highlightVulnerabilitySection("#wwf-table", "#wwf-no-vuln");
+            highlightVulnerabilitySection("#shellshock-table", "#shellshock-no-vuln");
+            highlightVulnerabilitySection("#ssh-table", "#ssh-no-vuln");
+
+            function highlightVulnerabilitySection(tableSelector, noVulnSelector) {
+                const table = document.querySelector(tableSelector);
+                const noVulnMessage = document.querySelector(noVulnSelector);
+                const sectionHeader = table.parentElement.querySelector('h2');
+                if (table && table.rows.length > 1) {
+                    sectionHeader.className = 'warning';
+                } else {
+                    noVulnMessage.style.display = 'block';
+                    table.style.display = 'none';
+                    sectionHeader.className = 'safe';
+                }
+            }
+        });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pentest Vulnerability Assessment Report</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+			color: #333;
+			margin: 0;
+			padding: 0;
+		}
+
+		h1 {
+			background-color: #007bff;
+			color: #fff;
+			padding: 20px;
+			margin: 0;
+		}
+
+		h2 {
+			margin-top: 40px;
+			margin-bottom: 10px;
+		}
+
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-top: 20px;
+		}
+
+		th, td {
+			padding: 10px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+
+		th {
+			background-color: #007bff;
+			color: #fff;
+		}
+
+		.high-risk {
+			background-color: #ff4444;
+			color: #fff;
+		}
+
+		.medium-risk {
+			background-color: #ffc107;
+			color: #333;
+		}
+
+		.low-risk {
+			background-color: #4caf50;
+			color: #fff;
+		}
+
+		.label {
+			padding: 5px 10px;
+			border-radius: 5px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		.suid {
+			background-color: #ff4444;
+			color: #fff;
+		}
+
+		.sudo {
+			background-color: #ffc107;
+			color: #333;
+		}
+
+		.capabilities {
+			background-color: #4caf50;
+			color: #fff;
+		}
+
+		.world-writable {
+			background-color: #007bff;
+			color: #fff;
+		}
+
+		.ssh {
+			background-color: #f44336;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<h1>Pentest Vulnerability Assessment Report</h1>
+
+	<h2>SUID</h2>
+	<table>
+		<tr>
+			<th>File Path</th>
+			<th>Risk Level</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>/usr/bin/passwd</td>
+			<td class="high-risk">
+				<span class="label suid">SUID</span>
+			</td>
+			<td>Password file can be modified by unauthorized users</td>
+		</tr>
+		<tr>
+			<td>/bin/ping</td>
+			<td class="medium-risk">
+				<span class="label suid">SUID</span>
+			</td>
+			<td>Ping command can be used to perform network reconnaissance</td>
+		</tr>
+	</table>
+
+	<h2>SUDO</h2>
+	<table>
+		<tr>
+			<th>User</th>
+			<th>Command</th>
+			<th>Risk Level</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>root</td>
+			<td>/bin/vi</td>
+			<td class="high-risk">
+				<span class="label sudo">SUDO</span>
+			</td>
+			<td>Editing system files can lead to privilege escalation</td>
+		</tr>
+		<tr>
+			<td>admin</td>
+		<td>/usr/bin/whoami</td>
+		<td class="low-risk">
+			<span class="label sudo">SUDO</span>
+		</td>
+		<td>No significant risk identified</td>
+	</tr>
+</table>
+
+<h2>Capabilities</h2>
+<table>
+	<tr>
+		<th>File Path</th>
+		<th>Risk Level</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>/usr/bin/passwd</td>
+		<td class="medium-risk">
+			<span class="label capabilities">Capabilities</span>
+		</td>
+		<td>Password file can be modified by unauthorized users</td>
+	</tr>
+	<tr>
+		<td>/bin/ping</td>
+		<td class="low-risk">
+			<span class="label capabilities">Capabilities</span>
+		</td>
+		<td>No significant risk identified</td>
+	</tr>
+</table>
+
+<h2>World-Writable Files</h2>
+<table>
+	<tr>
+		<th>File Path</th>
+		<th>Risk Level</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>/var/log/messages</td>
+		<td class="high-risk">
+			<span class="label world-writable">World-Writable</span>
+		</td>
+		<td>Log files can be modified by unauthorized users</td>
+	</tr>
+	<tr>
+		<td>/home/user1/secret.txt</td>
+		<td class="medium-risk">
+			<span class="label world-writable">World-Writable</span>
+		</td>
+		<td>Sensitive information can be modified or accessed by unauthorized users</td>
+	</tr>
+</table>
+
+<h2>SSH</h2>
+<table>
+	<tr>
+		<th>User</th>
+		<th>Risk Level</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td>root</td>
+		<td class="high-risk">
+			<span class="label ssh">SSH</span>
+		</td>
+		<td>SSH access with weak password or without key authentication</td>
+	</tr>
+	<tr>
+		<td>admin</td>
+		<td class="medium-risk">
+			<span class="label ssh">SSH</span>
+		</td>
+		<td>SSH access with password authentication enabled</td>
+	</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pentest Vulnerability Assessment Report</title>
+	<style>
+
+
+        body {
+            font-family: Open Sans, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #report-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .subtitle {
+            font-size: 20px;
+        }
+
+        .header {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .content {
+            padding: 0 20px;
+        }
+
+        .center {
+            display: block;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 26px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+        h3 {
+        	font-size: 18px;
+        	margin: 5px
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .red {
+            background-color: red;
+            color: white;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .yellow {
+            color: yellow;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .lightgray {
+            color: lightgray;
+        }
+
+        .section_heading {
+            background-color: #007bff;
+            color: #fff;
+            padding: 1px;
+            display: block;
+            text-align: center;
+        }
+
+        .warning {
+        	background-color: #dd0000;
+        	color: #fff;
+        	padding: 0 5px;
+        }
+
+        p, ul {
+        	margin: 5px;
+        }
+
+        table {
+			border-collapse: collapse;
+			width: 100%;
+			margin: 20px 0;
+		}
+
+        th, td {
+			padding: 10px;
+			text-align: left;
+			border-bottom: 1px solid #ddd;
+		}
+
+		th {
+			background-color: #007bff;
+			color: #fff;
+		}
+
+    </style>
+</head>
+<body>
+	<div id="report-container">
+		<div class="header">
+			<h1>Linux Privilege Escalation <br>Vulnerability Assessment and Mitigation Report<br>
+				<span class='subtitle'>Date Generated: 30-03-2023  17:00</span></h1>
+		</div>
+		<div class="section_heading"><h3>GENERAL INFORMATION</h3></div>
+		<div class="content">
+			<p><b>System Name:</b> Linux</p>
+			<p><b>Current User:</b> Kali</p>
+			<p><b>Other Users:</b></p>
+			<ul>
+				<li>Root</li>
+				<li>Test</li>
+			</ul>
+		</div>
+		<div class='section_heading'><h3>RESULT SUID</h3></div>
+		<div class='content'>
+			<span class="warning">SUID VULNERABILITY FOUND!</span>
+			<table>
+				<tr>
+					<th>File Path</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>/usr/bin/cat</td>
+					<td>Cat can be used to read files using superuser permission. e.g. /etc/shadow.</td>
+				</tr>
+				<tr>
+					<td>/bin/bash</td>
+					<td>Bash can be used to invoke a root shell and gain root privileges.</td>
+				</tr>
+			</table>
+
+		</div>
+		<div class='section_heading'><h3>RESULT SUDO</h3></div>
+		<div class='content'>
+			<span class="warning">SUDO VULNERABILITY FOUND!</span><br>
+			Kali can use sudo without a password with the following binaries:
+			<table>
+				<tr>
+					<th>File Path</th>
+					<th>Description</th>
+				</tr>
+				<tr>
+					<td>/usr/bin/mv</td>
+					<td>Mv can be used to overwrite other files using superuser permission. For example adding a new root user to the shadow file and escalate privileges from that user.</td>
+				</tr>
+			</table>
+		</div>
+		<div class='section_heading'><h3>RESULT CAPABILITIES</h3></div>
+		<div class='content'>
+
+		</div>
+		<div class='section_heading'><h3>RESULT WORLD WRITABLE FILES</h3></div>
+		<div class='content'>
+
+		</div>
+		<div class='section_heading'><h3>RESULT SHELLSHOCK</h3></div>
+		<div class='content'>
+			No shellshock vulnerability found.
+		</div>
+		<div class='section_heading'><h3>RESULT SSH</h3></div>
+		<div class='content'>
+
+		</div>
+	</div>
+</body>
+</html>

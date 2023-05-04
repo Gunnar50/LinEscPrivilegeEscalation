@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerability Assessment and Mitigation Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: #007bff;
+            color: #fff;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        h2 {
+            padding-bottom: 1px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        ul {
+            margin: 5px;
+        }
+
+        p {
+            margin: 0;
+            padding: 0px 8px;
+        }
+
+        .section-highlight {
+            background-color: #007bff;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+        
+
+        .warning {
+            background-color: #dd0000;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .safe {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            white-space: nowrap;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        .no-vulnerability {
+            font-weight: bold;
+            display: none;
+        }
+
+        .intro {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: justify;
+            line-height: 1.5;
+        }
+        
+        table td code {
+            display: block;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            padding: 4px 6px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .red {
+            color: #dd0000;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+           <h1>Linux Privilege Escalation <br>Vulnerability Assessment and Mitigation Report</h1>
+           <p>Generated on: <span id='date'></span></p>
+        </header>
+        <div class="main">
+            <div class="intro">
+                <p>
+                    This document presents the results of our security assessment, organized into sections that focus on specific functions.<br>
+                    Each section highlights potential vulnerabilities and their details.<br>
+                    If a section heading appears in <span class="warning">RED</span>, it indicates that a vulnerability has been found, and immediate action is recommended.<br>
+                    Please refer to the <span class="section-highlight">Recommendations</span> section at the bottom of the report for suggested mitigation strategies and best practices.<br>
+                </p>
+            </div>  
+    
+
+<section id='general'>
+<h2 class='section-highlight'>GENERAL INFORMATION</h2>
+<p><b>System:</b> Linux</p>
+<p><b>System Release:</b> 5.10.0-kali9-amd64</p>
+<p><b>System Version:</b> 2021.3 Kali GNU/Linux Rolling</p>
+<p><b>System Architecture:</b> x86_64</p>
+<p><b>Current User:</b> test</p>
+<p><b>Other Users:</b></p>
+<ul>
+<li>root</li>
+<li>postgres</li>
+<li>kali</li>
+</ul>
+</section>
+<section id='suid'>
+<h2 class='section-highlight'>SUID RESULT</h2>
+<table id='suid-table'><thead><tr><th>Binary Path</th><th>Exploit Command</th><th>Description</th></tr></thead><tbody>
+</tbody></table>
+<p id='suid-no-vuln' class='no-vulnerability'>No SUID vulnerabilities found!</p></section>
+<section id='sudo'>
+<h2 class='section-highlight'>SUDO RESULT</h2>
+<table id='sudo-table'><thead><tr><th>Binary Path</th><th>Exploit Command</th><th>Description</th></tr></thead><tbody>
+</tbody></table>
+<p id='sudo-no-vuln' class='no-vulnerability'>No SUDO vulnerabilities found!</p></section>
+<section id='capabilities'>
+<h2 class='section-highlight'>CAPABILITIES RESULT</h2>
+<table id='cap-table'><thead><tr><th>Binary Path</th><th>Exploit Command</th><th>Description</th></tr></thead><tbody>
+<tr><td>/home/test/python</td><td><code>/home/test/python -c 'import os; os.setuid(0); os.system("/bin/sh")'</code></td><td>This binary can be used to escalate privileges to ROOT by manipulating the current user's own UID to 0</td></tr>
+</tbody></table>
+<p id='cap-no-vuln' class='no-vulnerability'>No important Capabilities granted found!</p></section>
+<section id='world-writable'>
+<h2 class='section-highlight'>WORLD-WRITABLE FILES RESULT</h2>
+<table id='wwf-table'><thead><tr><th>World-Writable Path/Files</th><th>Description</th></tr></thead><tbody>
+<p>World-writable path/files found. Worth taking a second look.</p>
+<tr><td>/home/test/.profile</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.viminfo</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.face</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.bashrc.original</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.selected_editor</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.bashrc</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.face.icon</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.bash_history</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.python_history</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.bash_logout</td><td>This path can be used by any user.</td></tr>
+<tr><td>/home/test/.zshrc</td><td>This path can be used by any user.</td></tr>
+</tbody></table>
+<p id='wwf-no-vuln' class='no-vulnerability'>No World Writable Path/Files found!</p></section>
+<section id='shellshock'>
+<h2 class='section-highlight'>SHELLSHOCK RESULT</h2>
+<table id='shellshock-table'><thead><tr><th>Shellshock Vulnerable</th><th>Description</th></tr></thead><tbody>
+</tbody></table>
+<p id='shellshock-no-vuln' class='no-vulnerability'>No Shellshock Vulnerability found!</p></section>
+<section id='other'>
+<h2 class='section-highlight' style='background-color: #f48a20;'>OTHER FINDINGS RESULT</h2>
+<strong><p>Possible Private SSH keys found:</p></strong>
+<ul>
+<li>/home/kali/Documents/JohnRoom/id_rsa</li>
+<li>/home/kali/node_modules/snyk/dist/cli/64.index.js.map</li>
+<li>/home/kali/node_modules/snyk/dist/cli/64.index.js</li>
+<li>/home/kali/strapi/CVE-2021-3129_exploit/phpggc/gadgetchains/SwiftMailer/FW/3/gadgets.php</li>
+<li>/home/kali/strapi/CVE-2021-3129_exploit/phpggc/gadgetchains/SwiftMailer/FW/1/gadgets.php</li>
+<li>/home/kali/strapi/CVE-2021-3129_exploit/phpggc/gadgetchains/SwiftMailer/FW/2/gadgets.php</li>
+</ul>
+<p><strong>No rules found in hosts.allow. Worth looking into <span class='red'>/etc/hosts.allow</span> for anything missed.</strong></p>
+<p><strong>Interesting info in /etc/ssh/ssh_config file:</strong></p>
+<ul>
+<li>Include /etc/ssh/ssh_config.d/*.conf</li>
+<li>Host *</li>
+<li>    SendEnv LANG LC_*</li>
+<li>    HashKnownHosts yes</li>
+<li>    GSSAPIAuthentication yes</li>
+</ul>
+
+
+    <!-- RECOMMENDATIONS SECTION -->
+    <section id='recommendations'>
+    <h2 class='section-highlight'>Recommendations</h2>
+        <ul id='recommendations-list'>
+    
+            <li id='suid-recommendation' class='hidden'>
+                <strong>SUID:</strong> Review the necessity of SUID permissions for each listed file and remove SUID bits where appropriate.<br>
+                To remove the SUID bits, log into ROOT account and use <code>chmod u-s /path/to/file</code> for each vulnerable binary.
+            </li>
+    
+            <li id='sudo-recommendation' class='hidden'>
+                <strong>SUDO:</strong> Restrict user access by removing NOPASSWD access for listed files in the SUDO section, or completely remove SUDO permission if not in use.<br>
+                Please note that if a user can use sudo with a password, it does not necessarily indicate a vulnerability. Just ensure that the user has a strong password to maintain security.<br>
+                To restrict access to sudoers, log into ROOT account and update the sudoers file using <code>visudo</code> or <code>nano sudoers</code>.
+            </li>
+    
+            <li id='cap-recommendation' class='hidden'>
+                <strong>Capabilities:</strong> Revoke unnecessary capabilities from the listed files to reduce potential security risks.<br>
+                To remove capabilities granted, log into ROOT account and use <code>setcap -r /path/to/file</code> for each vulnerable binary.
+            </li>
+    
+            <li id='wwf-recommendation' class='hidden'>
+                <strong>World-Writable Files:</strong>  Remove world-writable permissions from listed directories to prevent unauthorized access.<br>
+                To remove world-writable permissions, log into ROOT account and use <code>chmod o-w /path/to/file</code> for each of the files / directories.
+            </li>
+    
+            <li id='shellshock-recommendation' class='hidden'>
+                <strong>ShellShock:</strong> Update Bash and kernel to a patched version (more recent one) and avoid using vulnerable environment variables.
+            </li>
+    
+            <li id='ssh-recommendation' class='hidden'>
+                <strong>SSH:</strong> This section is more of a warning, check each file listed in the SSH section.<br>
+                You can also disable root login for SSH if is enabled and use sudo instead for elevated privileges, enhancing security.
+            </li>
+        </ul>
+    </section>
+
+
+</div>
+</div>
+<script>
+        document.getElementById("date").innerHTML = new Date().toLocaleString();
+        document.addEventListener('DOMContentLoaded', function() {
+            highlightVulnerabilitySection("#suid-table", "#suid-no-vuln", "#suid-recommendation");
+            highlightVulnerabilitySection("#sudo-table", "#sudo-no-vuln", "#sudo-recommendation");
+            highlightVulnerabilitySection("#cap-table", "#cap-no-vuln", "#cap-recommendation");
+            highlightVulnerabilitySection("#wwf-table", "#wwf-no-vuln", "#wwf-recommendation");
+            highlightVulnerabilitySection("#shellshock-table", "#shellshock-no-vuln", "#shellshock-recommendation");
+
+            function highlightVulnerabilitySection(tableSelector, noVulnSelector, recommendationSelector) {
+                const table = document.querySelector(tableSelector);
+                const noVulnMessage = document.querySelector(noVulnSelector);
+                const sectionHeader = table.parentElement.querySelector('h2');
+                const recommendation = document.querySelector(recommendationSelector);
+                if (table && table.rows.length > 1) {
+                    sectionHeader.className = 'warning';
+                    recommendation.classList.remove('hidden');
+                } else {
+                    noVulnMessage.style.display = 'block';
+                    table.style.display = 'none';
+                    sectionHeader.className = 'safe';
+                }
+            }
+            checkAllHidden();
+        });
+        
+        function checkAllHidden() {
+            const recommendations = document.querySelectorAll('#recommendations ul li');
+            const allHidden = Array.from(recommendations).every(recommendation => recommendation.classList.contains('hidden'));
+        
+            if (allHidden) {
+                const noVulnerabilitiesMessage = document.createElement('li');
+                noVulnerabilitiesMessage.textContent = 'No vulnerabilities found in this system!';
+                const recommendationsList = document.querySelector('#recommendations ul');
+                recommendationsList.appendChild(noVulnerabilitiesMessage);
+            }
+        }
+
+    </script>
+</body>
+</html>

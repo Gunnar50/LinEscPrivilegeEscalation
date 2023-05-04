@@ -1,0 +1,21 @@
+
+create a user and password
+- sudo adduser -m username
+- sudo passwd username
+
+add to sudo group and give it a shell
+- sudo usermod -a -G sudo username
+- sudo chsh -s /bin/bash username
+
+create a new group
+- groupadd group_name
+
+add user to a specific group (vboxsf shared folder)
+- sudo adduser username group-name
+
+set the id of a user
+- usermod -u new_id username
+
+add a group to a file
+- chgrp group_name file_name
+
